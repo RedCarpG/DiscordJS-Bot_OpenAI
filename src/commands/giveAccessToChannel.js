@@ -24,30 +24,27 @@ const giveAccessToChannelCommandCallback = (client, interaction) => {
             if (err) {
                 console.error("Error: File read failed:", err);
                 return;
-            } else {
-                const obj = JSON.parse(data);
+            } 
+            
+            const obj = JSON.parse(data);
 
-                obj.guilds.forEach(element => {
-                    if (element.id == target_channel.guildId) {
-                        if (!element.channels.includes(target_channel.id)) {
-                            element.channels.push(target_channel.id);
-                        }
+            obj.guilds.forEach(element => {
+                if (element.id == target_channel.guildId) {
+                    if (!element.channels.includes(target_channel.id)) {
+                        element.channels.push(target_channel.id);
                     }
-                });
-
-            }
+                }
+            });
         }
     ).then(
         () => {
             writeFile('.\\data\\channels.json', JSON.stringify(obj), err => {
                 if (err) console.error("Error: File write failed:", err);
-                return;
             });
             interaction.reply({ content: `Channel ${target_channel.name} added`, ephemeral: true });
         }
     )
     interaction.reply({ content: `Waiting for response...` });
-    return;
 }
 export { giveAccessToChannelCommandCallback };
 export default giveAccessToChannelCommand.toJSON();

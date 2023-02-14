@@ -23,7 +23,6 @@ const hasPermissionChannel = async (guildId, channelId, cb) => {
                         if (element.channels.includes(channelId)) {
                             permission = true;
                         }
-                        return;
                     }
                 });
 

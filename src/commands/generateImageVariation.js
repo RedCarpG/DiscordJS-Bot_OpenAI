@@ -14,7 +14,6 @@ const generateImageVariationCommandCallback = async (client, interaction, openai
     let img_url = interaction.options.data[0].attachment.url;
     let img_name = interaction.options.data[0].attachment.name;
     let hide_origin = interaction.options.data[1] ? interaction.options.data[1].value : false;
-    let channel = interaction.channel;
     let user = interaction.user;
     let tmpFileName = `./temp/${interaction.id}.png`;
 
@@ -59,7 +58,6 @@ const generateImageVariationCommandCallback = async (client, interaction, openai
 
     deleteLocalFile(tmpFileName);
 
-    return;
 }
 
 const fetchImgToLocal = async (img_url, localFile) => {

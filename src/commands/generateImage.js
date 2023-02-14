@@ -15,7 +15,6 @@ const generateImageCommandCallback = async (client, interaction, openai) => {
     }
 
     let image_description = `${interaction.options.data[0].value}`;
-    let channel = interaction.channel;
     let user = interaction.user;
 
     await interaction.reply({

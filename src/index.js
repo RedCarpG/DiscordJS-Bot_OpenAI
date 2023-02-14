@@ -1,5 +1,4 @@
-import { Client, GatewayIntentBits, Routes, Application } from "discord.js";
-import { REST } from "discord.js";
+import { Client, GatewayIntentBits, Routes, REST } from "discord.js";
 import { config } from "dotenv";
 import { replyMessageGPTAI } from "./chatGPTAI.js";
 import { hasPermissionChannel } from "./checkPermission.js";
@@ -46,7 +45,7 @@ client.on("messageCreate", async (message) => {
         // Return when the message is sent from robots
         if (!message.guild || message.author.bot) return;
 
-        hasPermissionChannel(message.guild.id, message.channel.id, () => {
+        await hasPermissionChannel(message.guild.id, message.channel.id, () => {
             replyMessageGPTAI(client, openai, message);
         })
     } catch (err) {
@@ -64,12 +63,11 @@ client.on("interactionCreate", async (interaction) => {
     } else if (interaction.commandName === 'generate_image_variation') {
         generateImageVariationCommandCallback(client, interaction, openai);
     }
-    return;
 });
 
 async function main() {
     const commands = [giveAccessToChannelCommand, generateImageCommand, generateImageVariationCommand];
-    try {
+    // try {
         console.log(`> Start refreshing application (/) commands.`);
         await rest.put(
             Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID),
@@ -82,9 +80,9 @@ async function main() {
         console.log(`> Logging in...`);
         client.login(BOT_TOKEN);
 
-    } catch (err) {
-        console.error(`> Error: ${err}\n`);
-    }
+    // } catch (err) {
+    //     console.error(`> Error: ${err}\n`);
+    // }
 }
 
 main();
